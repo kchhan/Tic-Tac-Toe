@@ -1,19 +1,17 @@
 // Initialize game board
 const gameBoard = (() => {
-  const board = () => {
-    let _container = document.querySelector('.grid-container');
+  return (board = () => {
+    const _container = document.querySelector('.grid-container');
     let _grid = document.createElement('div');
-    _grid.classList.add('grid')
-    for(let i = 1; i <= 9; i++) {
+    _grid.classList.add('grid');
+    for (let i = 1; i <= 9; i++) {
       let _cell = document.createElement('div');
       _cell.className = `grid-item cell-${i}`;
       _cell.value = i;
       _grid.appendChild(_cell);
-    };
+    }
     _container.appendChild(_grid);
-  };
-
-  return board 
+  });
 })();
 gameBoard();
 
@@ -22,10 +20,14 @@ let win = false;
 
 // Factory Function for players
 const playerFactory = (player) => {
-  let hand = [];
+  const hand = [];
 
   const _play = (e) => {
-    if (e.target.classList.contains('grid-item') && !e.target.classList.contains('active') && !win) {
+    if (
+      e.target.classList.contains('grid-item') &&
+      !e.target.classList.contains('active') &&
+      !win
+    ) {
       e.target.classList.add('active');
       if (player === 'one') {
         e.target.innerHTML = `
@@ -33,23 +35,25 @@ const playerFactory = (player) => {
         `;
         // Push value to playerOne's hand
         playerOne.hand.push(e.target.value);
-        _showAlert("Player Two's turn", 'neutral')
-      } else  {
+        _showAlert("Player Two's turn", 'neutral');
+      } else {
         e.target.innerHTML = `
           <i class="far fa-circle fa-5x"></i>
         `;
         // Push value to playerTwo's hand
-        playerTwo.hand.push(e.target.value)
-        _showAlert("Player One's turn", 'neutral')
-      };
+        playerTwo.hand.push(e.target.value);
+        _showAlert("Player One's turn", 'neutral');
+      }
       // Checks if play makes a winning combo or a draw
       _checkForWin();
       _checkForDraw();
       // Changes to other player for next turn if game continues
-      player = player === 'one' ? 'two' : 'one';
-    };
+      if (!_checkForWin() && !_checkForDraw()) {
+        player = player === 'one' ? 'two' : 'one';
+      }
+    }
   };
-      
+
   // Event Listener for each cell
   document.querySelector('.grid-container').addEventListener('click', _play);
 
@@ -62,21 +66,22 @@ const playerFactory = (player) => {
     [2, 5, 8],
     [3, 6, 9],
     [1, 5, 9],
-    [3, 5, 7]
+    [3, 5, 7],
   ];
-  
+
   // Checks current player's hand if there is a combo
-  const _checkForWin = ((current) => {
-    current = player === 'one' ? current = playerOne : current = playerTwo;
+  const _checkForWin = (current) => {
+    current = player === 'one' ? (current = playerOne) : (current = playerTwo);
     for (let i = 0; i < _winningCombos.length; i++) {
       // Return true if hand includes a winning combo
-      win = _winningCombos[i].every(value => current.hand.includes(value));
+      win = _winningCombos[i].every((value) => current.hand.includes(value));
       if (win) {
-        _showAlert(`GAME! PLAYER ${player.toUpperCase()} WINS!`, 'win')
-        break;
-      };
-    };
-  });
+        _showAlert(`GAME! PLAYER ${player.toUpperCase()} WINS!`, 'win');
+        return true;
+      }
+    }
+    return false;
+  };
 
   // Checks if game is a draw
   const _checkForDraw = () => {
@@ -89,14 +94,16 @@ const playerFactory = (player) => {
       }
       return false;
     }
-    
+
     // Returns true if every node is active
-    let _draw = children.every(_containsActive);
+    const _draw = children.every(_containsActive);
     if (_draw) {
       win = true;
-      _showAlert("It's a Draw!", 'draw')
+      _showAlert("It's a Draw!", 'draw');
+      return true;
     }
-  }
+    return false;
+  };
 
   // Changes alert depending on situation
   const _showAlert = (message, className) => {
@@ -106,7 +113,7 @@ const playerFactory = (player) => {
   };
 
   // Resets Game
-  document.querySelector('.reset').addEventListener('click', function(){
+  document.querySelector('.reset').addEventListener('click', () => {
     win = false;
     playerOne.hand = [];
     playerTwo.hand = [];
@@ -114,17 +121,10 @@ const playerFactory = (player) => {
     document.querySelector('.grid-container').removeChild(_grid);
     player = 'one';
     gameBoard();
-    _showAlert('Game Reset. Go Player One', 'neutral')
+    _showAlert('Game Reset. Go Player One', 'neutral');
   });
 
-  return {hand};
+  return { hand };
 };
 const playerOne = playerFactory('one');
 const playerTwo = playerFactory('two');
-
-
-
-// let _draw = false;
-// for(let i = 0; i < _grid.childNodes.length; i++) {
-//   if ()
-// }
