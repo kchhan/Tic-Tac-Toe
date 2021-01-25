@@ -27,17 +27,6 @@ header div {
   padding: 5px 50px;
 }
 
-/* Message box */
-#message-box {
-  display: flex;
-  width: 400px;
-  height: 50px;
-  margin: 10px auto;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-}
-
 .neutral {
   border: 1px solid black;
 }
@@ -54,8 +43,8 @@ header div {
 
 /* Game Grid */
 .grid-container, .grid {
-  height: 525px;
-  width: 525px;
+  height: 375px;
+  width: 375px;
   margin: auto;
   display: flex;
   flex-wrap: wrap;
@@ -63,18 +52,18 @@ header div {
 
 .grid-item {
   display: flex;
-  width: 175px;
-  height: 175px;
+  width: 125px;
+  height: 125px;
   align-items: center;
   justify-content: center;
 }
 
-.cell-4, .cell-5, .cell-6 {
+.cell-3, .cell-4, .cell-5 {
   border-top: 2px solid black;
   border-bottom: 2px solid black;
 }
 
-.cell-2, .cell-5, .cell-8 {
+.cell-1, .cell-4, .cell-7 {
   border-left: 2px solid black;
   border-right: 2px solid black;
 }

@@ -1,130 +1,129 @@
-// Initialize game board
-const gameBoard = (() => {
-  return (board = () => {
-    const _container = document.querySelector('.grid-container');
-    let _grid = document.createElement('div');
-    _grid.classList.add('grid');
-    for (let i = 1; i <= 9; i++) {
-      let _cell = document.createElement('div');
-      _cell.className = `grid-item cell-${i}`;
-      _cell.value = i;
-      _grid.appendChild(_cell);
-    }
-    _container.appendChild(_grid);
-  });
-})();
-gameBoard();
+class TicTacToe {
+	constructor() {
+		this.xIsNext = true;
+		this.gameover = false;
+		this.board = [null, null, null, null, null, null, null, null, null];
+	}
 
-// Game will continue until win is true
-let win = false;
+	createGameBoard() {
+		const container = document.querySelector('.grid-container');
+		const grid = document.createElement('div');
+		grid.classList.add('grid');
+		for (let i = 0; i < 9; i++) {
+			let cell = document.createElement('div');
+			cell.className = `grid-item cell-${i}`;
+			cell.addEventListener('click', this.play);
+			grid.appendChild(cell);
+		}
+		container.appendChild(grid);
+	}
 
-// Factory Function for players
-const playerFactory = (player) => {
-  const hand = [];
+	enableReset() {
+		const resetBtn = document.querySelector('.reset');
+		resetBtn.addEventListener('click', this.reset);
+	}
 
-  const _play = (e) => {
-    if (
-      e.target.classList.contains('grid-item') &&
-      !e.target.classList.contains('active') &&
-      !win
-    ) {
-      e.target.classList.add('active');
-      if (player === 'one') {
-        e.target.innerHTML = `
-          <i class="fas fa-times fa-6x"></i>
-        `;
-        // Push value to playerOne's hand
-        playerOne.hand.push(e.target.value);
-        _showAlert("Player Two's turn", 'neutral');
-      } else {
-        e.target.innerHTML = `
-          <i class="far fa-circle fa-5x"></i>
-        `;
-        // Push value to playerTwo's hand
-        playerTwo.hand.push(e.target.value);
-        _showAlert("Player One's turn", 'neutral');
-      }
-      // Checks if play makes a winning combo or a draw
-      _checkForWin();
-      _checkForDraw();
-      // Changes to other player for next turn if game continues
-      if (!_checkForWin() && !_checkForDraw()) {
-        player = player === 'one' ? 'two' : 'one';
-      }
-    }
-  };
+	play(e) {
+		if (tictactoe.gameover === true) return;
 
-  // Event Listener for each cell
-  document.querySelector('.grid-container').addEventListener('click', _play);
+		// gets cell number from classlist
+		let cellNum = e.target.classList[1].split('-')[1];
 
-  // All possible winning combinations
-  const _winningCombos = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-    [1, 4, 7],
-    [2, 5, 8],
-    [3, 6, 9],
-    [1, 5, 9],
-    [3, 5, 7],
-  ];
+		if (tictactoe.xIsNext === true) {
+			tictactoe.board[cellNum] = 'x';
+			tictactoe.xIsNext = false;
+			e.target.innerHTML = '<i class="fas fa-times fa-3x"></i>';
+			e.target.removeEventListener('click', tictactoe.play);
+		} else {
+			tictactoe.board[cellNum] = 'o';
+			tictactoe.xIsNext = true;
+			e.target.innerHTML = '<i class="far fa-circle fa-3x"></i>';
+			e.target.removeEventListener('click', tictactoe.play);
+		}
 
-  // Checks current player's hand if there is a combo
-  const _checkForWin = (current) => {
-    current = player === 'one' ? (current = playerOne) : (current = playerTwo);
-    for (let i = 0; i < _winningCombos.length; i++) {
-      // Return true if hand includes a winning combo
-      win = _winningCombos[i].every((value) => current.hand.includes(value));
-      if (win) {
-        _showAlert(`GAME! PLAYER ${player.toUpperCase()} WINS!`, 'win');
-        return true;
-      }
-    }
-    return false;
-  };
+		tictactoe.checkWin();
+	}
 
-  // Checks if game is a draw
-  const _checkForDraw = () => {
-    const _grid = document.querySelector('.grid');
-    const children = Array.prototype.slice.call(_grid.childNodes);
+	checkWin() {
+		// horizontal
+		if (
+			(tictactoe.board[0] === tictactoe.board[1] &&
+				tictactoe.board[1] === tictactoe.board[2] &&
+				tictactoe.board[0] === tictactoe.board[2] &&
+				tictactoe.board[0] !== null &&
+				tictactoe.board[1] !== null &&
+				tictactoe.board[2] !== null) ||
+			(tictactoe.board[3] === tictactoe.board[4] &&
+				tictactoe.board[4] === tictactoe.board[5] &&
+				tictactoe.board[3] === tictactoe.board[5] &&
+				tictactoe.board[3] !== null &&
+				tictactoe.board[4] !== null &&
+				tictactoe.board[5] !== null) ||
+			(tictactoe.board[6] === tictactoe.board[7] &&
+				tictactoe.board[7] === tictactoe.board[8] &&
+				tictactoe.board[6] === tictactoe.board[8] &&
+				tictactoe.board[6] !== null &&
+				tictactoe.board[7] !== null &&
+				tictactoe.board[8] !== null)
+		) {
+			tictactoe.gameover = true;
+		}
 
-    function _containsActive(e) {
-      if (e.classList.contains('active')) {
-        return true;
-      }
-      return false;
-    }
+		// vertical
+		if (
+			(tictactoe.board[0] === tictactoe.board[3] &&
+				tictactoe.board[3] === tictactoe.board[6] &&
+				tictactoe.board[0] === tictactoe.board[6] &&
+				tictactoe.board[0] !== null &&
+				tictactoe.board[3] !== null &&
+				tictactoe.board[6] !== null) ||
+			(tictactoe.board[1] === tictactoe.board[4] &&
+				tictactoe.board[4] === tictactoe.board[7] &&
+				tictactoe.board[1] === tictactoe.board[7] &&
+				tictactoe.board[1] !== null &&
+				tictactoe.board[4] !== null &&
+				tictactoe.board[7] !== null) ||
+			(tictactoe.board[2] === tictactoe.board[5] &&
+				tictactoe.board[5] === tictactoe.board[8] &&
+				tictactoe.board[2] === tictactoe.board[8] &&
+				tictactoe.board[2] !== null &&
+				tictactoe.board[5] !== null &&
+				tictactoe.board[8] !== null)
+		) {
+			tictactoe.gameover = true;
+		}
 
-    // Returns true if every node is active
-    const _draw = children.every(_containsActive);
-    if (_draw) {
-      win = true;
-      _showAlert("It's a Draw!", 'draw');
-      return true;
-    }
-    return false;
-  };
+		// diagonal
+		if (
+			(tictactoe.board[0] === tictactoe.board[4] &&
+				tictactoe.board[4] === tictactoe.board[8] &&
+				tictactoe.board[0] === tictactoe.board[8] &&
+				tictactoe.board[0] !== null &&
+				tictactoe.board[4] !== null &&
+				tictactoe.board[8] !== null) ||
+			(tictactoe.board[2] === tictactoe.board[4] &&
+				tictactoe.board[4] === tictactoe.board[6] &&
+				tictactoe.board[2] === tictactoe.board[6] &&
+				tictactoe.board[2] !== null &&
+				tictactoe.board[4] !== null &&
+				tictactoe.board[6] !== null)
+		) {
+			tictactoe.gameover = true;
+		}
+	}
 
-  // Changes alert depending on situation
-  const _showAlert = (message, className) => {
-    const messageBox = document.querySelector('#message-box');
-    messageBox.className = className;
-    messageBox.textContent = message;
-  };
+	reset() {
+		const container = document.querySelector('.grid-container');
+		const grid = document.querySelector('.grid');
+		container.removeChild(grid);
 
-  // Resets Game
-  document.querySelector('.reset').addEventListener('click', () => {
-    win = false;
-    playerOne.hand = [];
-    playerTwo.hand = [];
-    let _grid = document.querySelector('.grid');
-    document.querySelector('.grid-container').removeChild(_grid);
-    player = 'one';
-    gameBoard();
-    _showAlert('Game Reset. Go Player One', 'neutral');
-  });
+		tictactoe.board = [null, null, null, null, null, null, null, null, null];
+		tictactoe.gameover = false;
 
-  return { hand };
-};
-const playerOne = playerFactory('one');
-const playerTwo = playerFactory('two');
+		tictactoe.createGameBoard();
+	}
+}
+
+let tictactoe = new TicTacToe();
+tictactoe.createGameBoard();
+tictactoe.enableReset();
