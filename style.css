@@ -1,93 +1,108 @@
 * {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  font-family: "Roboto", Arial, Helvetica, sans-serif;
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	font-family: "Roboto", Arial, Helvetica, sans-serif;
 }
 
 .main-container {
-  max-width: 900px;
-  margin: auto;
+	max-width: 900px;
+	margin: auto;
 }
 
 /* Header */
 header {
-  text-align: center;
-  margin-bottom: 10px;
+	text-align: center;
+	margin-bottom: 10px;
 }
 
 header h1 {
-  font-size: 4rem;
-  margin: 10px;
+	font-size: 4rem;
+	margin: 10px;
 }
 
 header div {
-  display: inline-block;
-  border: 1px solid black;
-  padding: 5px 50px;
-}
-
-.neutral {
-  border: 1px solid black;
-}
-
-.win {
-  color: green;
-  border: 1px solid green;
-}
-
-.draw {
-  color: orange;
-  border: 1px solid orange;
+	display: inline-block;
+	border: 1px solid black;
+	padding: 5px 50px;
 }
 
 /* Game Grid */
-.grid-container, .grid {
-  height: 375px;
-  width: 375px;
-  margin: auto;
-  display: flex;
-  flex-wrap: wrap;
+#board {
+	display: grid;
+	grid-template-areas:
+		"cell-0 cell-1 cell-2"
+		"cell-3 cell-4 cell-5"
+		"cell-6 cell-7 cell-8";
+	margin: auto;
+	grid-template-columns: repeat(3, 1fr);
+	height: 379px;
+	width: 379px;
+	border: 2px solid black;
 }
 
-.grid-item {
-  display: flex;
-  width: 125px;
-  height: 125px;
-  align-items: center;
-  justify-content: center;
+.cell {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 125px;
+	height: 125px;
 }
 
-.cell-3, .cell-4, .cell-5 {
-  border-top: 2px solid black;
-  border-bottom: 2px solid black;
+.cell-3,
+.cell-4,
+.cell-5 {
+	border-top: 2px solid black;
+	border-bottom: 2px solid black;
 }
 
-.cell-1, .cell-4, .cell-7 {
-  border-left: 2px solid black;
-  border-right: 2px solid black;
+.cell-1,
+.cell-4,
+.cell-7 {
+	border-left: 2px solid black;
+	border-right: 2px solid black;
 }
 
-/* Buttons */
-.btns {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 10px;
+/* Dynamic cell coloring */
+.winning {
+	background-color: green;
 }
 
-button {
-  font-size: 1.5rem;
-  margin: 3px;
+.draw {
+	background-color: yellow;
 }
 
-.reset {
-  padding: 5px 121px;
-  color: red;
-  border: 1px solid red;
+/* New Game Options */
+#game-options {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 10px;
 }
 
+.form-container {
+	margin: 0.5rem;
+	width: 250px;
+}
+
+select {
+	display: block;
+	width: 100%;
+	padding: 0.2rem;
+	font-size: 1.1rem;
+}
+
+#new-game {
+	margin: 0 auto;
+	padding: 0.5rem;
+	width: 100%;
+	font-size: 1.5rem;
+	font-weight: bold;
+	color: green;
+	border: 2px solid green;
+}
 /* Footer */
 footer {
-  text-align: center;
+	text-align: center;
 }

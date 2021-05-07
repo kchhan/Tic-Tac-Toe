@@ -1,32 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css">
-  <script defer src="app.js"></script>
-  <title>Tic-Tac-Toe</title>
-</head>
-<body>
-  <main class="main-container">
-    <header>
-      <h1>Tic-Tac-Toe</h1>
-    </header>
-    <section>
-      <div class="grid-container">
-        <!-- Javascript Grid -->
-      </div>
-    </section>
-    <section class="btns">
-      <button class="reset">
-        Reset
-      </button>
-    </section>
-    <footer>
-      Programmed By <a href="https://github.com/kchhan/tic-tac-toe" target="_blank">Kevin Chhan</a>  
-    </footer>
-  </main>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+		/>
+
+		<!-- css -->
+		<link rel="stylesheet" href="style.css" />
+
+		<!-- load all javascript files -->
+		<script defer src="/src/player.js"></script>
+		<script defer src="/src/board.js"></script>
+		<script defer src="/src/app.js"></script>
+
+		<title>Tic-Tac-Toe</title>
+	</head>
+	<body>
+		<main class="main-container">
+			<header>
+				<h1>Tic-Tac-Toe</h1>
+			</header>
+
+			<section id="board-container">
+				<!-- Javascript Grid -->
+			</section>
+
+			<section id="game-options">
+				<div class="form-container">
+					<label for="starting">Who goes first?</label>
+					<select name="starting" id="starting">
+						<option value="1">Human</option>
+						<option value="0">Computer</option>
+					</select>
+				</div>
+				<div class="form-container">
+					<label for="depth">AI Difficulty?</label>
+					<select name="depth" id="depth">
+						<option value="-1">Unbeatable AI</option>
+						<option value="2">Hard AI</option>
+						<option value="1">Easy AI</option>
+					</select>
+				</div>
+				<div class="form-container">
+					<button id="new-game">New Game</button>
+				</div>
+			</section>
+
+			<footer>
+				Programmed By
+				<a href="https://github.com/kchhan/tic-tac-toe" target="_blank"
+					>Kevin Chhan</a
+				>
+			</footer>
+		</main>
+	</body>
 </html>
